@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 import random
 import time
 
+def TimeSkip():
+    Time = time.sleep(1)
+    return Time 
+
 class Action(ABC):
     @abstractmethod
     def execution(self, attaker, target):
@@ -55,7 +59,7 @@ class NoSpecial(Action):
     def execution(self, attaker, target):
         return (False, 0, "None")
     
-class AtributosGerais(ABC):
+class Characters(ABC):
     def __init__(self, name, HP: int, ATK: int, DEF: int, SP: int, SAction: Action):
         self.name = name
         self.HP = HP
@@ -67,14 +71,12 @@ class AtributosGerais(ABC):
     def __str__(self):
             return f"|Name: {self.name}| Damage: {self.ATK}| Life: {self.HP}| Armor: {self.DEF}| Mana: {self.SP}"
 
-#Units Creation
-
-class Archer(AtributosGerais): pass
-class Warrior(AtributosGerais): pass
-class Sorcerer(AtributosGerais): pass
-class GoblinKing(AtributosGerais): pass
-class Goblin(AtributosGerais): pass
-class Hobgoblin(AtributosGerais): pass
+class Archer(Characters): pass
+class Warrior(Characters): pass
+class Sorcerer(Characters): pass
+class GoblinKing(Characters): pass
+class Goblin(Characters): pass
+class Hobgoblin(Characters): pass
 
 class UnitsType(ABC):
     
@@ -123,8 +125,6 @@ VillainList = [
     villains.Warrior_unit("Hobgoblin1"),
 ]
 
-#Execution
-
 Number_List = ['1', '2']
 def RandomChoice():
     return random.choice(Number_List)
@@ -132,9 +132,8 @@ def RandomChoice():
 def TurnAction(attaker, target):
 
     print(f'Soldier: {attaker.name} (HP: {attaker.HP}, SP: {attaker.SP})')
-    time.sleep(1.5)
+    TimeSkip()
     
-    #Detalhar
     move_choice = random.choices(['basic', 'special'], weights=[70, 30], k=1)[0]
     
     special_active = False
@@ -147,17 +146,17 @@ def TurnAction(attaker, target):
 
     if special_active:
         print(f'{attaker.name} use {Attak_name}!')
-        time.sleep(1.5)
+        TimeSkip()
         print(f'{target.name} lost {special_damage} HP (special attack)!')
         
     else: 
         if move_choice == 'special' and Attak_name != "No special":
            
             print(f'{attaker.name} try use {Attak_name}, but fail! ')
-            time.sleep(1.5)
+            TimeSkip()
         
         print(f'{attaker.name} use basic attack!')
-        time.sleep(1.5)
+        TimeSkip()
         
         base_damage = attaker.ATK
         real_damage = max(0, base_damage - target.DEF)
@@ -165,12 +164,12 @@ def TurnAction(attaker, target):
         
         print(f'{target.name} lost {real_damage} HP!')
 
-    time.sleep(1.5)
+    TimeSkip()
     if target.HP < 0:
         target.HP = 0
     
     print(f'{target.name} have {target.HP} HP now!')
-    time.sleep(1.5)
+    TimeSkip()
     
     if target.HP <= 0:
         if target in HeroesList:
@@ -182,35 +181,35 @@ def TurnAction(attaker, target):
     else:
         print(f'{target.name} still alive!')
     
-    time.sleep(1.5)
+    TimeSkip()
 
-def All_system(Red, Blue, random_number):
+def Battle_system (Red, Blue, random_number):
 
     print("The hero go ahead!")
-    time.sleep(1.5)
+    TimeSkip()
     print(f'Heroe: {Red.name} | ATK: {Red.ATK} | HP: {Red.HP} | DEF: {Red.DEF} | SP: {Red.SP}')
-    time.sleep(1.5)
+    TimeSkip()
     print("The villain appeared!")
-    time.sleep(1.5)
+    TimeSkip()
     print(f'Villain: {Blue.name} | ATK: {Blue.ATK} | HP: {Blue.HP} | DEF: {Blue.DEF} | SP: {Blue.SP}')
-    time.sleep(1.5)
+    TimeSkip()
 
     if random_number == '1':
           print(f'{Red.name} attack first!')
-          time.sleep(1.5)
+          TimeSkip()
           TurnAction(Red, Blue)
           
           if Blue.HP > 0:
-            print(f'\nIt is time to {Blue.name} attack back!')
+            print(f'\nIt is TimeSkip() to {Blue.name} attack back!')
             TurnAction(Blue, Red)
 
     else:
         print(f'{Blue.name} attack first!')
-        time.sleep(1.5)
+        TimeSkip()
         TurnAction(Blue, Red)
           
         if Red.HP > 0:
-            print(f'\nIt is time to {Red.name} attack back!')
+            print(f'\nIt is TimeSkip() to {Red.name} attack back!')
             TurnAction(Red, Blue)
 
     print()
@@ -234,13 +233,13 @@ def IniciateBattle():
 
         print("Let's the turn begin!")
         print()
-        time.sleep(1.5)
-        All_system(random_choice1, random_choice2, random_number)
-        time.sleep(1.5)
+        TimeSkip()
+        Battle_system (random_choice1, random_choice2, random_number)
+        TimeSkip()
         print('This turn finished!')
-        time.sleep(1.5)
+        TimeSkip()
         print('------------------')
         print()
-        time.sleep(1.5)
+        TimeSkip()
         
 IniciateBattle()
